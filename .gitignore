@@ -17,3 +17,10 @@ dist/
 # Editor/OS
 .vscode/
 .DS_Store
+
+# artifacts
+artifacts
+.claude
+
+# runtime uploads
+backend/documents/uploads/
