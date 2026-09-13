@@ -24,10 +24,14 @@ restarts.
   and `GET/POST /documents/{id}/annotations` (list/create annotations).
 - **Storage**: SQLite (`backend/data/app.db`), schema in `backend/schema.sql`,
   bootstrapped by `init-db.sh`. Uploaded PDFs are stored on disk under
-  `backend/data/uploads/`.
+  `backend/data/uploads/` and served through a dedicated static mount
+  (`/uploads/...`), not proxied through a business-logic endpoint — the
+  frontend only ever consumes `Document.file_url`, so this is a drop-in
+  swap point for S3/CDN-backed storage later.
 - **Data model**: each annotation stores `document_id`, `page_number`,
   `annotation_type` (`ignore`/`capture`), and `bbox` — required fields for a
-  multipage document to reload correctly.
+  multipage document to reload correctly. A `version` column supports
+  optimistic concurrency on updates (see Next steps).
 
 ### What we found out
 

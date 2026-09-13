@@ -6,6 +6,7 @@ from pydantic import BaseModel
 class Document(BaseModel):
     id: str
     filename: str
+    file_url: str  # local static path today, CDN URL once ingestion is split out
     page_count: Optional[int] = None
 
 
