@@ -22,5 +22,6 @@ dist/
 artifacts
 .claude
 
-# runtime uploads
+# runtime uploads and sqlite db
 backend/documents/uploads/
+backend/data/
