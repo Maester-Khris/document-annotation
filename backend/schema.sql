@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS annotations (
   annotation_type TEXT NOT NULL CHECK(annotation_type IN ('ignore', 'capture')),
   bbox TEXT NOT NULL,
   extracted_text TEXT,
+  version INTEGER NOT NULL DEFAULT 1,
   created_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
 

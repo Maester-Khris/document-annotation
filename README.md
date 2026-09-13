@@ -50,3 +50,14 @@ rectangle and save the extracted text alongside the annotation.
 - Wire local OCR (`pytesseract`) on capture rectangles
 - Record a short walkthrough video
 - Capture setup/run commands as a script or log
+- Split document ingestion into its own layer (upload → object storage →
+  CDN), so serving a large PDF no longer round-trips through the app
+  backend at all; `Document.file_url` already isolates the frontend from
+  this change
+- Concurrent editing: SQLite serializes writers (no Postgres-style
+  row-level MVCC), so move to Postgres before multiple people edit the
+  same project at once. Concurrent inserts of different annotations need
+  no coordination (independent rows); conflicting edits to the *same*
+  annotation are handled with optimistic concurrency — a conditional
+  `UPDATE ... WHERE id = ? AND version = ?` — with the actual
+  accept/reject/merge policy as app-level logic, not yet implemented

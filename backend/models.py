@@ -20,3 +20,4 @@ class AnnotationIn(BaseModel):
 class Annotation(AnnotationIn):
     id: str
     extracted_text: Optional[str] = None
+    version: int = 1  # optimistic concurrency: caller must echo this back on update
